@@ -1,3 +1,25 @@
+#btn_style {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  display: grid;
+  grid-gap: 100px;
+  grid-template-columns: 200px 200px 200px;
+}
+
+#div1 {
+  width: 100px;
+  height: 100px;
+  padding: 50px;
+  border: 1px solid black;
+  margin-left: 350px;
+  margin-top: 70px;
+}
+
 #findGroup.content {
   text-align: center;
   background-color: #f0ffff;
