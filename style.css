@@ -1,7 +1,26 @@
+#findGroup.content {
+  text-align: center;
+  background-color: #f0ffff;
+}
+
+#findGroup.finded {
+  border: 1px solid black;
+  height: 500px;
+  margin: 20px;
+  margin-bottom: 20px;
+}
+
 body {
   margin: 0;
   padding: 0;
   background: skyblue;
+}
+
+.inside {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  height: 100%;
 }
 
 .content {
@@ -23,13 +42,6 @@ header {
   height: 100%;
 }
 
-.inside {
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
-  height: 100%;
-}
-
 .article {
   display: table;
   /* border: 2px solid pink; */
@@ -46,7 +58,6 @@ header {
 
 .side {
   display: table-cell;
-
   border: 1px solid black;
 }
 
@@ -64,11 +75,9 @@ header {
   text-align: center;
 }
 
-.stickywrap {
+.wrap {
   height: 30%;
   width: 100%;
-
-  position: sticky;
   top: 0;
   /* border: 1px solid black; */
 }
