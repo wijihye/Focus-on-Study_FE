@@ -9,21 +9,38 @@ header {
   border: 1px solid black;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
+
+h2 {
+  position: relative;
+  top: 10px;
+}
+
 /* Find group page */
 
 #findGroup.content {
   text-align: center;
   background-color: #f0ffff;
+  height: 700px;
+  margin-top: 27px;
+  margin-bottom: 27px;
 }
 
 #findGroup.finded {
   border: 1px solid rgb(219, 219, 219);
   background-color: rgb(243, 243, 243);
   border-radius: 10px;
-  height: 500px;
+  width: 90%;
+  height: 530px;
   margin: 20px;
   margin-bottom: 20px;
   overflow: scroll;
+
+  position: relative;
+  left: 47px;
 }
 
 /* Find Group */
@@ -51,6 +68,29 @@ header {
   width: 70%;
   height: 115px;
   background-color: rgba(189, 215, 255, 0.363);
+}
+
+.userInfo {
+  width: 200px;
+  height: 70px;
+  float: right;
+  margin-right: 10px;
+  position: relative;
+  bottom: 25px;
+  font-size: 14px;
+}
+
+.userIcon {
+  font-size: 26px;
+}
+
+.findContent {
+  margin-left: 230px;
+}
+
+#findIcon {
+  font-size: 17px;
+  cursor: pointer;
 }
 
 /* Group page */
