@@ -1,57 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="../static/css/style.css" />
     <title>User 1</title>
-  </head>
-  <body>
-    <div class="user_screen_content">
-      <div class="user_screen_container">
+</head>
+<body>
+<div class="user_screen_content">
+    <div class="user_screen_container">
         <header>
-          <div class="user_screen_head">
-            <span class="user_screen_header"> [popup] User1 화면 상세 </span>
-          </div>
+            <div class="user_screen_head">
+                <span class="user_screen_header"> [사용자] 화면 상세 </span>
+            </div>
         </header>
         <div class="user_screen_info">
-          <div class="side left_screen">
-            <div class="screen_view">
-              <span>화면</span>
-              <form action="/video_feed" method="GET">
-                <div>
-                  <img src="{{ url_for('video_feed') }}" width="100%" />
+            <div class="side left_screen">
+                <div class="msg_area"></div>
+                <div class="chat_send_area">
+                    <input
+                            type="text"
+                            placeholder="보낼 메시지를 입력하세요."
+                            class="content"
+                    />
+                    <button
+                            type="button"
+                            value="전송"
+                            class="send_btn"
+                            onclick="send_msg();"
+                    >
+                        전송
+                    </button>
                 </div>
-              </form>
             </div>
-          </div>
-          <div class="side right_info">
-            <div class="user_info">
-              <div class="user_detail" name="box-1">
-                <span class="name">이름</span>
-              </div>
-              <div class="user_detail" name="box-2">
-                <span class="time">시간</span><br />
-                <div id="clock">0시 0분 0초</div>
-              </div>
-              <div class="user_detail" name="box-3">
-                <span class="title">주제</span>
-              </div>
-              <div class="user_detail" name="box-4">
-                <span class="description">설명</span>
-              </div>
-              <div>
-                <button id="end_btn">나가기</button>
-              </div>
+            <div class="side right_info">
+                <div class="screen_view">
+                    <span>화면</span>
+                    <form action="/video_feed" method="GET">
+                        <div>
+                            <img src="{{ url_for('video_feed') }}" width="100%" />
+                        </div>
+                    </form>
+                </div>
+                <div class="user_info">
+                    <div class="user_detail user_name" name="box-1">
+                        <span class="detail_title">이름</span>
+                        <span class="detail_desc" th:text="${member.name}"/>
+                    </div>
+                    <div class="user_detail time" name="box-2">
+                        <span class="detail_title">시간</span><br />
+                        <span class="detail_desc" id="clock">0시 0분 0초</span>
+                    </div>
+                    <div class="user_detail group_desc" name="box-3">
+                        <span class="detail_title">그룹 이름</span>
+                        <span class="detail_desc" th:text="${group.group_title}"/>
+                        <span class="detail_title">그룹 설명</span>
+                        <span class="detail_desc" th:text="${group.group_explain}"/>
+                     </div>
+                </div>
+                <div class="end_btn_footer">
+                    <button id="end_btn">나가기</button>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-    <script type="text/javascript" src="/user_screen_detail.js"></script>
-  </body>
+</div>
+<script type="text/javascript" src="/js/user_screen_detail.js"></script>
+</body>
+<script>
+    let socket = new WebSocket("ws://localhost:8181//websocket");
+
+
+    socket.onopen = function (e) {
+        console.log('open server!')
+    };
+
+    socket.onclose = function (data) {
+        console.log('close server!')
+    };
+
+    socket.onerror = function (e){
+        console.log(e);
+    }
+
+    socket.onmessage = function (user_data) {
+        let user_json = JSON.parse(user_data.data);
+        let msg_area = document.querySelector('.msg_area');
+        let new_msg = document.createElement('span');
+        let my_msg = document.createElement('span');
+
+        if (user_json.status == "me") {
+            my_msg.setAttribute('class', 'chat_text me');
+            my_msg.innerText = user_json.user_name + ": " + user_json.msg;
+            msg_area.append(my_msg);
+        } else {
+            new_msg.setAttribute('class', 'chat_text other');
+            new_msg.innerText = user_json.user_name + ": " + user_json.msg;
+            msg_area.append(new_msg);
+        }
+    }
+
+    function send_msg() {
+        let content = document.querySelector('.content');
+
+        if (content.value == ''){
+            alert('메세지를 입력하세요!');
+        }
+        else{
+            socket.send(content.value);
+        }
+
+        content.value="";
+        content.focus();
+    }
+
+
+</script>
 </html>
